@@ -1,24 +1,61 @@
-import logo from './logo.svg';
-import './App.css';
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/ui/Layout";
+import AllProducts from "./components/pages/AllProducts";
+import NewProduct from "./components/pages/NewProduct";
+import UpdateProductForm from "./features/products/UpdateProductForm";
+import Signup from "./features/users/Signup";
+import Signin from "./features/users/Signin";
+import UnAuthorizeRoute from "./features/auths/UnAuthorizeRoute";
+import AdminDashboard from "./features/products/AdminDashboard";
+import ShoppingCard from "./features/products/ShoppingCard";
+import ProtectedRoute from "./features/auths/ProtectedRoute";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        {/* Public Route */}
+        <Route index element={<AllProducts />} />
+        <Route path="user">
+          <Route path="register" element={<Signup />} />
+          <Route path="login" element={<Signin />} />
+          <Route path="logout" element={<Signin />} />
+          {/* <Route path="logout" element={<Navigate to={'/'} replace={true}/>}/> */}
+        </Route>
+
+        {/* Role_USER, ROLE_ADMIN  */}
+        <Route
+          path="shopping-cart"
+          element={<ProtectedRoute allowRoles={["ROLE_USER","ROLE_ADMIN"]} />}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Route index element={<ShoppingCard/>}/>
+        </Route>
+
+        {/* Role_USER */}
+        <Route
+          path="unauthorized"
+          element={<ProtectedRoute allowRoles={["ROLE_USER"]} />}
+        >
+          <Route index element={<UnAuthorizeRoute />} />
+        </Route>
+
+        {/* Role_ADMIN */}
+        <Route
+          path="product"
+          element={<ProtectedRoute allowRoles={["ROLE_ADMIN"]} />}
+        >
+          <Route path="new" element={<NewProduct />} />
+          <Route path="update/:productId" element={<UpdateProductForm />} />
+        </Route>
+
+        <Route
+          path="dashboard"
+          element={<ProtectedRoute allowRoles={["ROLE_ADMIN"]} />}
+        >
+          <Route index element={<AdminDashboard />} />
+        </Route>
+      </Route>
+    </Routes>
   );
 }
 
