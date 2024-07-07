@@ -1,16 +1,16 @@
 import { Outlet } from "react-router-dom"
 import MainNavigation from "../layout/MainNavigation"
-import classes from "./Layout.module.css"
+import classes from './Layout.module.css'
 
 
 function Layout(props){
     return(
-       <div>
+       <main>
         <MainNavigation/>
-        <main className={classes.main}>
-            <Outlet/>
-        </main>
-       </div>
+        <div className={classes.main}>
+                <Outlet/>
+        </div>
+       </main>
     )
 }
 export default Layout

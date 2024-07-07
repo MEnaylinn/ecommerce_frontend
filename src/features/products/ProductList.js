@@ -1,10 +1,10 @@
 import Product from './Product'
-// import classes from './ProductList.module.css'
+import classes from './ProductList.module.css'
 
 const ProductList = ({products}) => {
   return (
     
-        <div className='row'>
+      <div className={classes.list}>
           {
           products.map(product=><Product
               key={product.id}
