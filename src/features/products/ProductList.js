@@ -1,17 +1,18 @@
 import Product from './Product'
-import classes from './ProductList.module.css'
+// import classes from './ProductList.module.css'
 
 const ProductList = ({products}) => {
-  return ( 
-        <ul className={classes.list}>
-         {
+  return (
+    
+        <div className='row'>
+          {
           products.map(product=><Product
               key={product.id}
               product={product}
             />
           )
          }
-        </ul>
+        </div>
 )
 }
 

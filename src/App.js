@@ -9,6 +9,7 @@ import UnAuthorizeRoute from "./features/auths/UnAuthorizeRoute";
 import AdminDashboard from "./features/products/AdminDashboard";
 import ShoppingCard from "./features/products/ShoppingCard";
 import ProtectedRoute from "./features/auths/ProtectedRoute";
+import Userprofile from "./features/products/Userprofile";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="register" element={<Signup />} />
           <Route path="login" element={<Signin />} />
           <Route path="logout" element={<Signin />} />
+          <Route path="profile" element={<Userprofile />} />
           {/* <Route path="logout" element={<Navigate to={'/'} replace={true}/>}/> */}
         </Route>
 
