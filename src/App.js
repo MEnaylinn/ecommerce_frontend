@@ -7,9 +7,16 @@ import Signup from "./features/users/Signup";
 import Signin from "./features/users/Signin";
 import UnAuthorizeRoute from "./features/auths/UnAuthorizeRoute";
 import AdminDashboard from "./features/products/AdminDashboard";
-import ShoppingCard from "./features/products/ShoppingCard";
 import ProtectedRoute from "./features/auths/ProtectedRoute";
 import Userprofile from "./features/products/Userprofile";
+
+import AddShippingAddress from "./features/shipping/AddShippingAddress";
+import UpdateShippingAddress from "./features/shipping/UpdateShippingAddress.js";
+import ShoppingCard from "./features/cart/ShoppingCard.js";
+import Payment from "./features/billing/Payment.js";
+import CardRegister from "./features/billing/CardRegister.js";
+
+
 
 function App() {
   return (
@@ -28,10 +35,33 @@ function App() {
         {/* Role_USER, ROLE_ADMIN  */}
         <Route
           path="shopping-cart"
-          element={<ProtectedRoute allowRoles={["ROLE_USER","ROLE_ADMIN"]} />}
+          element={<ProtectedRoute allowRoles={["ROLE_USER", "ROLE_ADMIN"]} />}
         >
-          <Route index element={<ShoppingCard/>}/>
+          <Route index element={<ShoppingCard />} />
         </Route>
+
+        <Route
+          path="shipping"
+          element={<ProtectedRoute allowRoles={["ROLE_USER", "ROLE_ADMIN"]} />}
+        >
+          <Route path="/" element={ <Shipping/>} />
+          <Route path="create" element={<AddShippingAddress />} />
+          <Route path="all" element={<AddShippingAddress />} />
+          <Route
+            path="update/:shippingId"
+            element={<UpdateShippingAddress />}
+          />
+        </Route>
+
+        <Route
+            path="payment"
+            element={
+              <ProtectedRoute allowRoles={["ROLE_USER", "ROLE_ADMIN"]} />
+            }
+          >
+            <Route path="info" element={<Payment />} />
+            <Route path="create" element={<CardRegister />} />
+            </Route>
 
         {/* Role_USER */}
         <Route

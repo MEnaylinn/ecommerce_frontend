@@ -3,9 +3,13 @@ import ProductList from '../../features/products/ProductList'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllProducts, getAllProducts, getError, getStatus } from '../../features/products/productSlice'
 
+
 const AllProducts = () => {
   const status = useSelector(getStatus)
+  
   const dispatch=useDispatch()
+
+  
   useEffect(()=>{
       if(status === 'idle'){
           dispatch(fetchAllProducts())
@@ -24,7 +28,12 @@ const AllProducts = () => {
   }
 
   if(status === 'loading'){
-      content = 'Loading...'
+      content = 
+      <>
+      <div className="spinner-border text-dark" role="status">
+      <span className="visually-hidden">Loading...</span>
+    </div>
+    </>
   }
 
   if(status === 'failed'){
@@ -32,12 +41,12 @@ const AllProducts = () => {
   }
 
   return (
-    <section>
+    <div className='container align-items-center'>
       <h1>All Products</h1>
       {
         content
       }
-    </section>
+    </div>
   )
 }
 

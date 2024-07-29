@@ -2,7 +2,10 @@ import React from 'react'
 
 const UnAuthorizeRoute = () => {
   return (
-    <h1>You have no permission access.</h1>
+    <div>
+      <h1>You have no permission access.</h1>
+    </div>
+    
   )
 }
 

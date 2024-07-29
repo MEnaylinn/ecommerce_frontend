@@ -1,4 +1,4 @@
-.item {
+/* .item {
   margin: 1rem 0;
 }
 
@@ -43,4 +43,7 @@
 .actions button:hover,
 .actions button:active {
   background-color: #ffe2ed;
+} */
+.card{
+  height: 500px;
 }

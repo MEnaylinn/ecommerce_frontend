@@ -1,3 +1,6 @@
 export const productPath='http://localhost:8686/api/product'
 export const userPath='http://localhost:8686/api/user'
 export const imagePath='http://localhost:8686/api/image'
+export const cartPath='http://localhost:8686/api/cart-item'
+export const shippingPath='http://localhost:8686/api/shipping'
+export const paymentPath='http://localhost:8686/api/payment'

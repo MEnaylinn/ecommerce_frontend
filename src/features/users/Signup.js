@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import classes from './Signup.module.css'
-import Card from '../../components/ui/Card'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { signup } from '../auths/authSlice'
@@ -45,8 +44,9 @@ const Signup = () => {
     }
   return (
    <section>
-    <h1>Sign Up For New User</h1>
-    <Card>
+    <div className='card row col-sm-12 col-md-6 m-auto mt-5'>
+    <p className='fw-bold fs-4'>Sign Up For New User</p>
+    
     <form className={classes.form}>
         <div className={classes.control}>
             <label htmlFor='firstName'>First Name</label>
@@ -56,6 +56,7 @@ const Signup = () => {
                 required
                 value={firstName}
                 onChange={onFirstNameChange}
+                className='form-control'
             />
         </div>
         <div className={classes.control}>
@@ -66,6 +67,7 @@ const Signup = () => {
                 required
                 value={lastName}
                 onChange={onLastNameChange}
+                className='form-control'
             />
         </div>
         <div className={classes.control}>
@@ -76,6 +78,7 @@ const Signup = () => {
                 required
                 value={fullName}
                 onChange={onFullNameChange}
+                className='form-control'
             />
         </div>
         <div className={classes.control}>
@@ -86,6 +89,7 @@ const Signup = () => {
                 required
                 value={userName}
                 onChange={onUserNameChange}
+                className='form-control'
             />
         </div>
         <div className={classes.control}>
@@ -96,14 +100,17 @@ const Signup = () => {
                 required
                 value={password}
                 onChange={onPasswordChange}
+                className='form-control'
             />
         </div>
         <div className={classes.actions}>
             <button onClick={onSubmit} disabled = {!canCreate}>Create</button>
         </div>
     </form>
-    <Link to={'/user/login'}>Login here.</Link>
-    </Card>
+    <Link className='fs-6' to={'/user/login'}>Already have an account.Login here.</Link>
+    </div>
+    
+
    </section>
   )
 }

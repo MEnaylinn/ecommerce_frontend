@@ -111,7 +111,6 @@ export const deleteProduct = createAsyncThunk("deleteProduct",async(data) => {
 });
 
 
-
 const initialState={
     products : [],
     categories : [],
