@@ -7,10 +7,14 @@ body {
   margin: 0;
   width: 100%;
   height: 100%;
-  background-color: #fcf3f6;
+  background-color:hsl(198, 92%, 95%);
+  position: relative;
    
    /* background-image: linear-gradient(to right, rgb(115, 191, 245), rgb(255, 255, 255)); */
    
+}
+main{
+  margin-top: 80px;
 }
 
 h1 {
@@ -52,7 +56,7 @@ h2 {
   border-radius: 10px 10px 0 0;
 }
 .card-img-top:hover{
-  transform: scale(1.1);
+  transform: scale(1.05);
   border-radius: 10px 10px 10px 10px;
 }
 .card:hover{
@@ -110,3 +114,31 @@ h2 {
     width: 50px;
 
  }
+ .navbar{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1050;
+  
+  
+ }
+ .navbar-brand:hover{
+  transform: scale(1.1);
+}
+
+ .nav-item:hover{
+  transform: scale(1.1);
+  fill: white;
+  color:white;
+  opacity: 100;
+
+}
+
+.dropdown-menu{
+  position: absolute; /* Ensure it's positioned correctly */
+  z-index: 1;      /* Ensure it appears on top of other elements */
+}
+.outlet-content{
+  min-height: 100vh;
+  
+}

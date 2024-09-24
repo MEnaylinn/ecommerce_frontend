@@ -3,7 +3,9 @@ import productSlice from "../features/products/productSlice";
 import authSlice from "../features/auths/authSlice";
 import shippingSlice from "../features/shipping/shippingSlice";
 import cartItemSlice from "../features/cart/cartItemSlice";
-import paymentSlice from "../features/billing/paymentSlice";
+import paymentSlice from "../features/payment/paymentSlice";
+import orderSlice from "../features/order/orderSlice";
+
 
 export const store = configureStore({
     reducer :{
@@ -11,7 +13,8 @@ export const store = configureStore({
         auths : authSlice,
         carts :cartItemSlice,
         shipping : shippingSlice,
-        userpayment : paymentSlice
+        userpayment : paymentSlice,
+        userorder : orderSlice
 
     }
 })

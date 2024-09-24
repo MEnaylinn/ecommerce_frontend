@@ -16,13 +16,9 @@ export const fetchAllProducts = createAsyncThunk("fetchAllProducts",async() => {
 }
 })
 
-export const fetchAllCategory = createAsyncThunk("fetchAllCategory",async(token) => {
+export const fetchAllCategory = createAsyncThunk("fetchAllCategory",async() => {
     try{
-    const response=await axios.get(`${productPath}/category`,{
-        headers : {
-            'Authorization' : String(token)
-        }
-    })
+    const response=await axios.get(`${productPath}/category`)
     return {
         statusCode : response.status,
         data : response.data
@@ -71,19 +67,22 @@ export const putProduct = createAsyncThunk("putProduct",async(data) => {
             'Authorization' : data.token
         }
     });
-    if(response.status === 200){
-        const uploadResponse = await axios.post(`${imagePath}/upload/${response.data.id}`,data.formData,{
-            headers : {
-                'Content-Type': 'multipart/form-data',
-                'Authorization' : data.token
-            }
-        })
-        if(uploadResponse.status === 200){
-                console.log(uploadResponse.data)
-        }else{
-                console.log("image upload failed")
-        }
-    }
+
+    data.formData.has()
+
+    // if(response.status === 200 && data.formData){
+    //     const uploadResponse = await axios.post(`${imagePath}/upload/${response.data.id}`,data.formData,{
+    //         headers : {
+    //             'Content-Type': 'multipart/form-data',
+    //             'Authorization' : data.token
+    //         }
+    //     })
+    //     if(uploadResponse.status === 200){
+    //             console.log(uploadResponse.data)
+    //     }else{
+    //             console.log("image upload failed")
+    //     }
+    // }
     return {
         statusCode : response.status,
         data : response.data
@@ -150,7 +149,7 @@ const productSlice=createSlice({
                     const {statusCode,data}=response;
                 if(statusCode === 201){
                     state.status='idle'
-                    state.products = [...state.categories,data];
+                    state.products = [...state.products,data];
                 }
 
                 if(statusCode === 404){
@@ -168,7 +167,7 @@ const productSlice=createSlice({
                     const {statusCode,data}=response;
                 if(statusCode === 200){
                     state.status='idle'
-                    state.categories = [data,state.categories.filter(category => category.id !== Number(data.id))]
+                    state.products = [data,state.products.filter(product => product.id !== Number(data.id))]
                 }
 
                 if(statusCode === 404){
@@ -206,7 +205,7 @@ const productSlice=createSlice({
                 const {statusCode,data}=response;
             if(statusCode === 200){
                 state.status='idle'
-                state.categories = [state.categories.filter(category => category.id !== Number(data))]
+                state.products = [state.products.filter(product => product.id !== Number(data))]
             }
 
             if(statusCode === 404){

@@ -30,7 +30,7 @@ const BillingTotal = ({items,onClick}) => {
             <div className="col">{totalDiscount.toFixed(2)}</div>
           </div>
          
-          <div className="input-group mb-3 pe-5">
+          {/* <div className="input-group mb-3 pe-5">
             <input
               type="text"
               className="form-control"
@@ -41,14 +41,13 @@ const BillingTotal = ({items,onClick}) => {
             <button className="btn btn-info" type="button" id="button-addon2">
               APPLY
             </button>
-          </div>
+          </div> */}
   
           <div className="row fw-bold fs-5">
             <div className="col">Net Total :</div>
             <div className="col">{netTotal.toFixed(2)}</div>
           </div>
   
-          <button className="btn btn-warning w-70 m-auto"><Link onClick={onClick} className="btn">Order Now</Link></button>
           </div>
         </div>
       </section>

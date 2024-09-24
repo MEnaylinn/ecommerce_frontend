@@ -1,22 +1,26 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getToken } from "../auths/authSlice";
-import { useLocation, useNavigate } from "react-router-dom";
-import { addShipping } from "./shippingSlice";
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { deleteShipping, getShippingById, updateShipping } from './shippingSlice';
+import { getToken } from '../auths/authSlice';
 
-const AddShippingAddress = () => {
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [postalCode, setPostalCode] = useState("");
-  const [shippingAddressName, setShippingAddressName] = useState("");
+const ShippingUpdate = () => {
+  const {shippingId} = useParams()
+  const shipping = useSelector((state)=> getShippingById(state,shippingId))
+
+  const [shippingAddressName, setShippingAddressName] = useState(shipping?.shippingAddressName);
+  const [address1, setAddress1] = useState(shipping?.address1);
+  const [address2, setAddress2] = useState(shipping?.address2);
+  const [city, setCity] = useState(shipping?.city);
+  const [country, setCountry] = useState(shipping?.country);
+  const [postalCode, setPostalCode] = useState(shipping?.postalCode);
   const [status, setStatus] = useState("idle");
+
   const token = useSelector(getToken);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from.pathname || "/shopping-cart";
+  const from = location.state?.from.pathname || "/shipping";
 
   console.log(location);
   console.log(location.state);
@@ -34,17 +38,18 @@ const AddShippingAddress = () => {
     [address1, address2, city, country, postalCode,shippingAddressName].every(Boolean) &&
     status === "idle";
 
-  const onSubmit = (e) => {
+  const onUpdateAction = (e) => {
     if (canCreate && token) {
       setStatus("pending");
       dispatch(
-        addShipping({
+        updateShipping({
           userShippingAddress: {
+            id : shipping?.id,
             shippingAddressName,
             address1,
             address2,
             city,
-            country,
+            country : country.toUpperCase(),
             postalCode,
           },
           token: String(token),
@@ -54,12 +59,25 @@ const AddShippingAddress = () => {
     }
   };
 
+  const onDeleteAction = (e) => {
+    if (shipping?.id && token) {
+      setStatus("pending");
+      dispatch(
+        deleteShipping({
+          userShippingAddressId : shipping?.id,
+          token: String(token),
+        })
+      );
+      navigate(from, { replace: true });
+    }
+  };
+
   return (
-    <div className="container">
-      <div className="col-12 col-sm-8 col-md-6 m-auto my-3">
-      <form>
+    <div className='container'>
+    <div className="col-12 col-sm-8 col-md-6 m-auto my-3">
+      <form className='form'>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label htmlFor="shippingAddressName" className="form-label">
             Shipping Address Name
           </label>
           <input
@@ -135,20 +153,27 @@ const AddShippingAddress = () => {
             onChange={onPostalCodeChange}
           />
         </div>
+        <div className='gap-3 text-end'>
+        <button
+          className="btn btn-danger mx-3"
+          onClick={onDeleteAction}
+        >
+          Delete
+        </button>
 
-        <div className="text-end">
         <button
           className="btn btn-primary"
-          onClick={onSubmit}
+          onClick={onUpdateAction}
           disabled={!canCreate}
         >
-          Submit
+          Update
         </button>
+
         </div>
       </form>
-      </div>
+    </div>
     </div>
   );
 };
 
-export default AddShippingAddress;
+export default ShippingUpdate;

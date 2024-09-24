@@ -10,7 +10,7 @@ const Signin = () => {
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const from = location.state?.from.pathname || "/";
+  const from = location.state?.from?.pathname || "/";
 
   const onUserNameChange = (e) => setUserName(e.target.value);
   const onPasswordChange = (e) => setPassword(e.target.value);
@@ -29,9 +29,10 @@ const Signin = () => {
           username: userName,
           password,
         })
-      );
+      ).then(()=>{
+        navigate(from, { replace: true });
+      })
 
-      navigate(from, { replace: true });
     }
   };
 

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { getToken } from "../auths/authSlice";
 import { fetchAllShipping, getAllShipping, getStatus } from "../shipping/shippingSlice";
 
-const BillingAddress = ({onClick}) => {
+const BillingAddress = ({onClick,shippingAddress}) => {
   const shipping = useSelector(getAllShipping);
   const dispatch = useDispatch();
   const token = useSelector(getToken);
@@ -13,16 +13,17 @@ const BillingAddress = ({onClick}) => {
 
   const [selectedItem,setSelectedItem] = useState('')
 
-  const handleCheckbox = (index)=>{
-        console.log('index of checkbox')
-        console.log(index)
-        onClick(...shipping.filter((ship) => ship.id === index))
-        setSelectedItem(index)
-        
+  const handleCheckbox = (address)=>{
+        onClick(...shipping.filter((ship) => ship.id === address.id))
+        setSelectedItem(address)
   }
 
   console.log(token);
   console.log(status);
+
+  useEffect(()=>{
+    setSelectedItem(shippingAddress)
+  },[shippingAddress])
 
   useEffect(() => {
     if (status === "idle") {
@@ -49,8 +50,8 @@ const BillingAddress = ({onClick}) => {
                 className="form-check-input me-2"
                 type="checkbox"
                 value={ship.id}
-                onChange={()=> handleCheckbox(ship.id)}
-                checked = {ship.id === selectedItem}
+                onChange={()=> handleCheckbox(ship)}
+                checked = {ship.id === selectedItem.id}
                 
               />
             
@@ -83,9 +84,9 @@ const BillingAddress = ({onClick}) => {
           <i className="bi bi-geo-alt"></i>Billing Address
         </div>
         {address}
-        <div className="ms-auto">
+        {/* <div className="ms-auto">
           <Link to={"/shipping/create"}>Add New Address</Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );

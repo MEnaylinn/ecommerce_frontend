@@ -16,6 +16,8 @@ const CartBill = ({ items }) => {
 }
   netTotal = totalBill - totalDiscount;
 
+let canOperate = netTotal > 0? true:false;
+
   return (
     <section>
       <div className="card billing-details mb-5">
@@ -48,7 +50,7 @@ const CartBill = ({ items }) => {
           <div className="col">{netTotal.toFixed(2)}</div>
         </div>
 
-        <button className="btn btn-warning w-70 m-auto"><Link to={'/shipping/'} className="btn">PROCEED TO CHECKOUT</Link></button>
+        <button className="btn btn-warning w-70 m-auto" disabled={!canOperate}><Link to={'/shipping'} className="btn">PROCEED TO CHECKOUT</Link></button>
         </div>
       </div>
     </section>

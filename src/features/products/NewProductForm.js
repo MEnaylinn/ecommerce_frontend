@@ -23,6 +23,7 @@ const NewProductForm = () => {
   const [image, setImage] = useState("");
   const [review, setReview] = useState(0);
   const [requestStatus, setRequestStatus] = useState("idle");
+  const [imageUrl, setImageUrl] = useState("");
 
   const renderedOptions = categories.map((category) => (
     <option key={category} value={category}>
@@ -45,9 +46,20 @@ const NewProductForm = () => {
   const onQuantityChange = (e) => setQuantity(e.target.value);
   const onPriceChange = (e) => setPrice(e.target.value);
   const onDiscountPercentChange = (e) => setDiscountPercent(e.target.value);
+
   const onImageChange = (e) => {
+    const file = e.target.files[0];
     setImage(e.target.files[0]);
-    console.log(image);
+    console.log(image.pathname);
+    if (file) {
+      // Create a URL for the image file
+      const url = URL.createObjectURL(file);
+      setImageUrl(url);
+      console.log(url);
+
+      // // Clean up the object URL when the component unmounts
+      // return () => URL.revokeObjectURL(url);
+    }
   };
   const onReviewChange = (e) => setReview(e.target.value);
   const onDescriptionChange = (e) => setDescription(e.target.value);
@@ -105,11 +117,11 @@ const NewProductForm = () => {
 
   return (
     <div className="container">
-      <div className="col-12 col-md-6 m-auto">
+      <div className="card col-12 col-md-6 m-auto my-2">
         <div className="fs-4 fw-bold mb-5">New Product Form</div>
         <form className="form">
-          <div className="mb-3">
-            <img src={image} alt="" className="card-img-top w-75" />
+          <div className="mb-3 text-center">
+            <img src={imageUrl} alt="" className="card-img-top w-75 mb-2" />
             <input type="file" id="image" required onChange={onImageChange} />
           </div>
           <div className="mb-3">

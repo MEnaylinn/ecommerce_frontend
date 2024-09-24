@@ -1,7 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { imagePath } from "../config/pathConfig";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCartItem, getAllCartItems, updateCartItem } from "./cartItemSlice";
+import {
+  deleteCartItem,
+  fetchAllCartItem,
+  getAllCartItems,
+  getStatus,
+  updateCartItem,
+} from "./cartItemSlice";
 import { getToken } from "../auths/authSlice";
 
 const CartItem = ({ item }) => {
@@ -9,15 +15,26 @@ const CartItem = ({ item }) => {
   const token = useSelector(getToken);
   const dispatch = useDispatch();
   const [statusCode, setStatusCode] = useState("idle");
+  const status = useSelector(getStatus);
+
+  // useEffect(()=>{
+  //   if(token && getStatus === 'idle'){
+  //       dispatch(fetchAllCartItem(token))
+  //   }
+  // },[getStatus,token,dispatch])
 
   const onSubAction = (e) => {
+    e.preventDefault();
     console.log(e.target.value);
     const cartItem = cartItems.filter(
       (cartItem) => cartItem.id === Number(e.target.value)
     );
-    console.log({cartItem});
+    console.log({ cartItem });
 
-    if (cartItem && token) {
+    const updateItem = cartItem[0].quantity -1;
+
+
+    if (cartItem && token && updateItem > 0) {
       setStatusCode("pending");
       dispatch(
         updateCartItem({
@@ -26,9 +43,23 @@ const CartItem = ({ item }) => {
           token: String(token),
         })
       );
+    }else{
+      // delete when subration is zero
+      if (token) {
+        setStatusCode("pending");
+        dispatch(
+          deleteCartItem({
+            cartItemId: Number(cartItem[0].id),
+            token: String(token),
+          })
+        );
+      }
+
     }
   };
+
   const onAddAction = (e) => {
+    e.preventDefault();
     console.log(e.target.value);
     const cartItem = cartItems.filter(
       (cartItem) => cartItem.id === Number(e.target.value)
@@ -46,17 +77,15 @@ const CartItem = ({ item }) => {
       );
     }
   };
-  const onDeleteAction = (e) => {
-    const cartItem = cartItems.filter(
-      (cartItem) => cartItem.id === Number(e.target.value)
-    );
 
-    if (cartItem && token) {
-      console.log(cartItem[0].id +' is deleted')
+  const onDeleteAction = (e) => {
+    e.preventDefault();
+
+    if (token) {
       setStatusCode("pending");
       dispatch(
         deleteCartItem({
-          cartItemId: Number(cartItem[0].id),
+          cartItemId: Number(e.currentTarget.value),
           token: String(token),
         })
       );
@@ -88,11 +117,7 @@ const CartItem = ({ item }) => {
               >
                 Cancel
               </button>
-              <button
-                type="button"
-                className="btn btn-primary"
-                
-              >
+              <button type="button" className="btn btn-primary">
                 Confirm
               </button>
             </div>
@@ -145,12 +170,10 @@ const CartItem = ({ item }) => {
           <div className="col align-self-center text-end">
             <button
               className="btn btn-info "
-              // data-bs-toggle="modal"
-              // data-bs-target = "#confirmation-modal"
               value={item.id}
               onClick={onDeleteAction}
             >
-              <i className="bi bi-trash" onClick={onDeleteAction} value={item.id}></i>
+              <i className="bi bi-trash"></i>
             </button>
           </div>
         </div>

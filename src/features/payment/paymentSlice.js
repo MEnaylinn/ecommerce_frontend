@@ -5,6 +5,8 @@ import axios from "axios";
 export const fetchAllUserPayment = createAsyncThunk(
   "fetchAllUserPayment",
   async (data) => {
+    console.log('address link')
+    console.log(`${paymentPath}/all`)
     try {
       const response = await axios.get(`${paymentPath}/all`, {
         headers: {
@@ -22,6 +24,7 @@ export const fetchAllUserPayment = createAsyncThunk(
 );
 
 export const postUserPayment = createAsyncThunk("postUserPayment",async (data) => {
+  console.log('userPaymentRequest : '+data.userPaymentRequest)
     try {
       const response = await axios.post(`${paymentPath}/create`,data.userPaymentRequest,{
           headers: {

@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { shippingPath } from "../config/pathConfig";
+import { actions } from "react-table";
+import { act } from "react";
 
 export const fetchAllShipping=createAsyncThunk("fetchAllShipping",async(data)=>{
     console.log("fetchAllShipping is :"+ data.token)
@@ -75,13 +77,21 @@ export const updateShipping = createAsyncThunk("updateShipping",async(data) => {
 
 const initialState={
     shipping : [],
+    defaultShipping :'',
     status :'idle',
     error : ''
 }
 const shippingSlice = createSlice({
     name : "shippingSlice",
     initialState,
-    reducers : {},
+    reducers : {
+        setDefaultShipping : (state, action)=>{
+            state.defaultShipping = action.payload;
+        },
+        clearDefaultShipping : (state)=>{
+            state.defaultShipping = '';
+        }
+    },
     extraReducers (builder){
         builder
         .addCase(fetchAllShipping.fulfilled,(state,action)=>{
@@ -176,4 +186,6 @@ export default shippingSlice.reducer
 export const getAllShipping = (state)=>state.shipping.shipping
 export const getShippingById = (state,shippingId)=>state.shipping.shipping.find((ship)=> ship.id === Number(shippingId))
 export const getStatus = (state) => state.shipping.status
+export const getDefaultShipping = (state) => state.shipping.defaultShipping;
 export const getError = (state) => state.shipping.error
+export const {setDefaultShipping,clearDefaultShipping} = shippingSlice.actions

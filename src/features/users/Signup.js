@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import classes from './Signup.module.css'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -12,8 +12,15 @@ const Signup = () => {
     const [password,setPassword]=useState('')
     const [signupRequestStatus,setSignupRequestStatus]=useState('idle')
 
-    const onFirstNameChange=e => setFirstName(e.target.value)
-    const onLastNameChange=e => setLastName(e.target.value)
+    const onFirstNameChange=e =>{
+        setFirstName(e.target.value) 
+        setFullName(e.target.value)
+    } 
+    
+    const onLastNameChange=e => {
+        setLastName(e.target.value)
+        setFullName(firstName+" "+e.target.value)
+    }
     const onFullNameChange=e => setFullName(e.target.value)
     const onUserNameChange=e => setUserName(e.target.value)
     const onPasswordChange=e => setPassword(e.target.value)
@@ -24,7 +31,6 @@ const Signup = () => {
     const location = useLocation()
 
     const from = location.state?.from?.pathname || '/'
-
 
     const onSubmit = e =>{
         e.preventDefault()
