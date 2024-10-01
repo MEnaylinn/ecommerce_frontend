@@ -6,9 +6,11 @@ import { useEffect } from "react";
 import { fetchAllCartItem, getAllCartItems, getStatus } from "./cartItemSlice";
 import CartBill from "./CartBill";
 import { Link } from "react-router-dom";
+import { getStatus as getProductStatus } from "../products/productSlice";
 
 const ShoppingCard = () => {
   const status = useSelector(getStatus);
+  const productStatus = useSelector(getProductStatus)
   const dispatch = useDispatch();
   const token = useSelector(getToken);
   const cartItems = useSelector(getAllCartItems);
@@ -17,10 +19,10 @@ const ShoppingCard = () => {
   console.log(token);
 
   useEffect(() => {
-    if (status === "idle") {
+    if (status === "idle" || productStatus === "idle") {
       dispatch(fetchAllCartItem(token));
     }
-  }, [status, token, dispatch]);
+  }, [status, productStatus, token, dispatch]);
 
   console.log(cartItems);
 

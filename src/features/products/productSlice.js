@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { imagePath, productPath } from "../config/pathConfig";
+import { imagePath, productPath } from "../../config/pathConfig";
 
 
 
@@ -37,7 +37,7 @@ export const postNewProduct = createAsyncThunk("postNewProduct",async(data) => {
         }
     });
 
-    if(response.status === 201){
+    if(response.status === 201 && data.formData.has("file")){
         const uploadResponse = await axios.post(`${imagePath}/upload/${response.data.id}`,data.formData,{
             headers : {
                 'Content-Type': 'multipart/form-data',
@@ -68,21 +68,19 @@ export const putProduct = createAsyncThunk("putProduct",async(data) => {
         }
     });
 
-    data.formData.has()
-
-    // if(response.status === 200 && data.formData){
-    //     const uploadResponse = await axios.post(`${imagePath}/upload/${response.data.id}`,data.formData,{
-    //         headers : {
-    //             'Content-Type': 'multipart/form-data',
-    //             'Authorization' : data.token
-    //         }
-    //     })
-    //     if(uploadResponse.status === 200){
-    //             console.log(uploadResponse.data)
-    //     }else{
-    //             console.log("image upload failed")
-    //     }
-    // }
+    if(response.status === 200 && data.formData.has("file")){
+        const uploadResponse = await axios.post(`${imagePath}/upload/${response.data.id}`,data.formData,{
+            headers : {
+                'Content-Type': 'multipart/form-data',
+                'Authorization' : data.token
+            }
+        })
+        if(uploadResponse.status === 200){
+                console.log(uploadResponse.data)
+        }else{
+                console.log("image upload failed")
+        }
+    }
     return {
         statusCode : response.status,
         data : response.data

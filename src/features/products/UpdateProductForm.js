@@ -1,4 +1,3 @@
-import classes from "./UpdateProductForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteProduct,
@@ -10,7 +9,7 @@ import {
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getToken } from "../auths/authSlice";
-import { imagePath } from "../config/pathConfig";
+import { imagePath } from "../../config/pathConfig";
 
 const UpdateProductForm = () => {
   const { productId } = useParams();
@@ -92,7 +91,8 @@ const UpdateProductForm = () => {
     if (canCreate && token) {
       setRequestStatus("pending");
 
-       const formData = new FormData();
+      const formData = new FormData();
+
       if (image) {
         formData.append("file", image);
       }
@@ -135,7 +135,7 @@ const UpdateProductForm = () => {
     <section>
       <div className="card col-12 col-md-6 m-auto my-2">
         <div className="fs-5 fw-bold text-center"> Product Updating</div>
-        <form className={classes.form}>
+        <form>
           <div className="mb-3 text-center">
             <img
               src={
@@ -147,32 +147,41 @@ const UpdateProductForm = () => {
             <input type="file" id="image" required onChange={onImageChange} />
           </div>
 
-          <div className={classes.control}>
-            <label htmlFor="name">Name</label>
+          <div className="mb-3 gap-2">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
             <input
               type="text"
               id="name"
+              className="form-control"
               required
               value={name}
               onChange={onNameChange}
             />
           </div>
 
-          <div className={classes.control}>
-            <label htmlFor="code">Code</label>
+          <div className="mb-3">
+            <label htmlFor="code" className="form-label">
+              Code
+            </label>
             <input
               type="text"
               id="code"
+              className="form-control"
               required
               value={code}
               onChange={onCodeChange}
             />
           </div>
 
-          <div className={classes.control}>
-            <label htmlFor="category">Category</label>
+          <div className="mb-3">
+            <label htmlFor="category" className="form-label">
+              Category
+            </label>
             <select
               id="category"
+              className="form-control"
               required
               value={category}
               onChange={onCategoryChange}
@@ -181,40 +190,52 @@ const UpdateProductForm = () => {
             </select>
           </div>
 
-          <div className={classes.control}>
-            <label htmlFor="quantity">Quantity</label>
+          <div className="mb-3">
+            <label htmlFor="quantity" className="form-label">
+              Quantity
+            </label>
             <input
               type="number"
               id="quantity"
+              className="form-control"
               required
               value={quantity}
               onChange={onQuantityChange}
             />
           </div>
-          <div className={classes.control}>
-            <label htmlFor="price">Price</label>
+          <div className="mb-3">
+            <label htmlFor="price" className="form-label">
+              Price
+            </label>
             <input
               type="number"
               id="price"
+              className="form-control"
               required
               value={price}
               onChange={onPriceChange}
             />
           </div>
-          <div className={classes.control}>
-            <label htmlFor="discountPercent">Discount Percent</label>
+          <div className="mb-3">
+            <label htmlFor="discountPercent" className="form-label">
+              Discount Percent
+            </label>
             <input
               type="number"
               id="discountPercent"
+              className="form-control"
               required
               value={discountPercent}
               onChange={onDiscountPercentChange}
             />
           </div>
-          <div className={classes.control}>
-            <label htmlFor="review">Review</label>
+          <div className="mb-3">
+            <label htmlFor="review" className="form-label">
+              Review
+            </label>
             <input
               type="number"
+              className="form-control"
               id="review"
               required
               value={review}
@@ -222,11 +243,14 @@ const UpdateProductForm = () => {
             />
           </div>
 
-          <div className={classes.control}>
-            <label htmlFor="description">Description</label>
+          <div className="mb-3">
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
             <textarea
               id="description"
               rows="10"
+              className="form-control"
               required
               value={description}
               onChange={onDescriptionChange}

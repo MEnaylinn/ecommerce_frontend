@@ -142,3 +142,11 @@ h2 {
   min-height: 100vh;
   
 }
+.gradient-circle {
+  background: radial-gradient(circle at center, white 40%, transparent 60%), 
+              conic-gradient(transparent 0deg 100deg, green 100deg 360deg), 
+              red;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}

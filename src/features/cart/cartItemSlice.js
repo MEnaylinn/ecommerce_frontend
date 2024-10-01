@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { cartPath } from "../config/pathConfig";
+import { cartPath } from "../../config/pathConfig";
 
 export const fetchAllCartItem = createAsyncThunk(
   "fetchAllCartItem",
@@ -23,27 +23,74 @@ export const fetchAllCartItem = createAsyncThunk(
   }
 );
 
-export const fetchAllOrderedItem = createAsyncThunk(
-  
-    "fetchAllOrderedItem",
-    async (data) => {
-      console.log((`${cartPath}/all/user`));
-      try {
-        const response = await axios.get(`${cartPath}/allOrderedItem/${data.username}`, {
+export const fetchOrderedCartItems = createAsyncThunk(
+  "fetchOrderedCartItems",
+  async (data) => {
+    try {
+      const response = await axios.get(
+        `${cartPath}/orderedCartItem/${data.username}`,
+        {
           headers: {
             Authorization: String(data.token),
           },
-        });
-  
-        return {
-          statusCode: response.status,
-          data: response.data,
-        };
-      } catch (error) {
-        console.error(error);
-      }
+        }
+      );
+
+      return {
+        statusCode: response.status,
+        data: response.data,
+      };
+    } catch (error) {
+      console.error(error);
     }
-  );
+  }
+);
+
+export const fetchAllOrderedCartItems = createAsyncThunk(
+  "fetchAllOrderedCartItems",
+  async (data) => {
+    try {
+      const response = await axios.get(
+        `${cartPath}/allOrderedCartItem/${data.username}/${data.role}`,
+        {
+          headers: {
+            Authorization: String(data.token),
+          },
+        }
+      );
+
+      return {
+        statusCode: response.status,
+        data: response.data,
+      };
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
+
+export const fetchAllUserOrderedItem = createAsyncThunk(
+  "fetchAllUserOrderedItem",
+  async (data) => {
+    try {
+      const response = await axios.get(
+        `${cartPath}/allOrderedItem/${data.role}`,
+        {
+          headers: {
+            Authorization: String(data.token),
+          },
+        }
+      );
+
+      return {
+        statusCode: response.status,
+        data: response.data,
+      };
+    } catch (error) {
+      console.error(error);
+    }
+  }
+);
 
 export const addCartItem = createAsyncThunk("addCartItem", async (data) => {
   console.log(`${cartPath}/add/${data.productId}/${data.username}`);
@@ -125,7 +172,7 @@ const cartItemSlice = createSlice({
   reducers: {
     clearCartItem: (state) => {
       state.cartItems = [];
-      state.orderedCartItems=[];
+      state.orderedCartItems = [];
       state.status = "idle";
       state.error = "";
     },
@@ -153,7 +200,7 @@ const cartItemSlice = createSlice({
         }
       })
 
-      .addCase(fetchAllOrderedItem.fulfilled, (state, action) => {
+      .addCase(fetchOrderedCartItems.fulfilled, (state, action) => {
         const response = action.payload;
 
         if (response?.statusCode) {
@@ -170,6 +217,26 @@ const cartItemSlice = createSlice({
           }
         } else {
           console.log("error occured in fetchAllCartItem");
+        }
+      })
+
+      .addCase(fetchAllOrderedCartItems.fulfilled, (state, action) => {
+        const response = action.payload;
+
+        if (response?.statusCode) {
+          const { statusCode, data } = response;
+          console.log(statusCode);
+          console.log(data);
+          if (statusCode === 200) {
+            state.status = "success";
+            state.orderedCartItems = data;
+          } else {
+            state.status = "failed";
+            state.error = String(data);
+            console.log("error occured in Server");
+          }
+        } else {
+          console.log("error occured in fetchAllOrderedCartItem");
         }
       })
 

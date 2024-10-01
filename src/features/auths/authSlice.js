@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { userPath } from "../config/pathConfig";
+import { userPath } from "../../config/pathConfig";
 import axios from "axios";
 
 const SIGNIN_PATH = `${userPath}/signin`;
@@ -156,7 +156,7 @@ const authSlice = createSlice({
         const response = action.payload;
 
         if (response?.statusCode) {
-          const { statusCode, data } = response;
+          const { statusCode } = response;
           if (statusCode === 200) {
             state.user = null;
             state.status = "idle";

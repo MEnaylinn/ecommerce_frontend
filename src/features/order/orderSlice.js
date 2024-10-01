@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { orderPath } from "../config/pathConfig";
+import { orderPath } from "../../config/pathConfig";
 import axios from "axios";
 
 export const fetchAllUserOrder = createAsyncThunk(

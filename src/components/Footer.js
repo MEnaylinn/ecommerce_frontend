@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllCategory,
   getAllCategories,
-} from "../../features/products/productSlice";
+} from "../features/products/productSlice";
 import { Link } from "react-router-dom";
 
 const Footer = () => {

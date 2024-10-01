@@ -1,19 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchAllUserOrder,
-  getAllUserOrder,
-  getError,
-  getStatus,
-} from "./orderSlice";
 import { getToken, getUser } from "../auths/authSlice";
 import DataTable from "react-data-table-component";
 import {
-  fetchAllOrderedItem,
+  fetchOrderedCartItems,
   getAllOrderedItems,
   getStatus as getCartStatus,
 } from "../cart/cartItemSlice";
-import { imagePath } from "../config/pathConfig";
+import { imagePath } from "../../config/pathConfig";
 
 const OrderHistory = () => {
   const orderedItems = useSelector(getAllOrderedItems);
@@ -25,7 +19,7 @@ const OrderHistory = () => {
   useEffect(() => {
     if (cartStatus === "success") {
       dispatch(
-        fetchAllOrderedItem({
+        fetchOrderedCartItems({
           token: String(token),
           username: String(user.username),
         })
@@ -111,8 +105,9 @@ const OrderHistory = () => {
   ];
   return (
     <div>
+      <div className="fs-5 fw-bold mt-1 ms-3">Orders History</div>
       <div style={{ borderRadius: 10 + "px", padding: 10 + "px" }}>
-        <DataTable data={orderedItems} columns={columns} />
+        <DataTable pagination selectableRows data={orderedItems} columns={columns} />
       </div>
     </div>
   );

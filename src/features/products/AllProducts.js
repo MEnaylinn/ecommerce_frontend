@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
-import ProductList from "../../features/products/ProductList";
+import React, { useEffect } from "react";
+import ProductList from "./ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchAllCategory,
   fetchAllProducts,
-  getAllCategories,
   getAllProducts,
   getError,
   getStatus,
-} from "../../features/products/productSlice";
-import { getToken } from "../../features/auths/authSlice";
+} from "./productSlice";
+import { getToken } from "../auths/authSlice";
 import { useParams } from "react-router-dom";
 
 const AllProducts = () => {
@@ -17,7 +16,7 @@ const AllProducts = () => {
   const products = useSelector(getAllProducts);
   const error = useSelector(getError);
   const status = useSelector(getStatus);
-  const categories = useSelector(getAllCategories);
+  // const categories = useSelector(getAllCategories);
   const token = useSelector(getToken);
   const dispatch = useDispatch();
 
@@ -40,7 +39,7 @@ const AllProducts = () => {
     if (token) {
       dispatch(fetchAllCategory());
     }
-  }, [ dispatch]);
+  }, [ dispatch,token]);
 
   let content = "";
   if (status === "success" && selectedProducts) {
@@ -61,16 +60,16 @@ const AllProducts = () => {
     content = { error };
   }
 
-  let categoryBar = "";
-  console.log("categories");
-  console.log(categories);
-  if (categories) {
-    categoryBar = categories.map((category) => (
-      <button className="btn btn-info" key={category}>{category}</button>
-    ));
-  } else {
-    categoryBar = "No category";
-  }
+  // let categoryBar = "";
+  // console.log("categories");
+  // console.log(categories);
+  // if (categories) {
+  //   categoryBar = categories.map((category) => (
+  //     <button className="btn btn-info" key={category}>{category}</button>
+  //   ));
+  // } else {
+  //   categoryBar = "No category";
+  // }
 
   return (
     <div className="container align-items-center">

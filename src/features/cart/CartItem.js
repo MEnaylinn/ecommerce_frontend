@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { imagePath } from "../config/pathConfig";
+import React, { useState } from "react";
+import { imagePath } from "../../config/pathConfig";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteCartItem,
-  fetchAllCartItem,
   getAllCartItems,
-  getStatus,
   updateCartItem,
 } from "./cartItemSlice";
 import { getToken } from "../auths/authSlice";
@@ -15,7 +13,6 @@ const CartItem = ({ item }) => {
   const token = useSelector(getToken);
   const dispatch = useDispatch();
   const [statusCode, setStatusCode] = useState("idle");
-  const status = useSelector(getStatus);
 
   // useEffect(()=>{
   //   if(token && getStatus === 'idle'){
@@ -164,7 +161,7 @@ const CartItem = ({ item }) => {
           </div>
 
           <div className="col align-self-center text-center mt-3 fw-bold">
-            <p>$ {item.subTotal.toFixed(2)}</p>
+            <p>$ {(item.product.price * item.quantity).toFixed(2)}</p>
           </div>
 
           <div className="col align-self-center text-end">

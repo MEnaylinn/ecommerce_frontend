@@ -1,12 +1,10 @@
-import { Navigate, Route, Routes } from "react-router-dom";
-import Layout from "./components/ui/Layout";
-import AllProducts from "./components/pages/AllProducts";
-import NewProduct from "./components/pages/NewProduct";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout.js";
+import AllProducts from "./features/products/AllProducts.js";
 import UpdateProductForm from "./features/products/UpdateProductForm";
 import Signup from "./features/users/Signup";
 import Signin from "./features/users/Signin";
 import UnAuthorizeRoute from "./features/auths/UnAuthorizeRoute";
-// import AdminDashboard from "./features/products/AdminDashboard";
 import ProtectedRoute from "./features/auths/ProtectedRoute";
 import ShoppingCard from "./features/cart/ShoppingCard.js";
 import CardRegister from "./features/payment/CardRegister.js";
@@ -20,6 +18,8 @@ import EmailPhoneUpdate from "./features/users/EmailUpdate.js";
 import PasswordUpdate from "./features/users/PasswordUpdate.js";
 import PhoneUpdate from "./features/users/PhoneUpdate.js";
 import OrderHistory from "./features/order/OrderHistory.js";
+import Dashboard from "./features/dashboard/Dashboard.js";
+import NewProductForm from "./features/products/NewProductForm.js";
 
 function App() {
   return (
@@ -33,8 +33,9 @@ function App() {
         <Route path="user">
           <Route path="register" element={<Signup />} />
           <Route path="login" element={<Signin />} />
-          <Route path="logout" element={<Navigate to={"/"} replace={true} />} />
-        </Route>
+          {/* <Route path="logout" element={<Navigate to={"/"} replace={true} />} /> */}
+        </Route> 
+       
 
         {/* Role_USER, ROLE_ADMIN  */}
         <Route
@@ -93,7 +94,7 @@ function App() {
           path="product"
           element={<ProtectedRoute allowRoles={["ROLE_ADMIN"]} />}
         >
-          <Route path="new" element={<NewProduct />} />
+          <Route path="new" element={<NewProductForm/>} />
           <Route path="update/:productId" element={<UpdateProductForm />} />
         </Route>
 
@@ -101,7 +102,7 @@ function App() {
           path="dashboard"
           element={<ProtectedRoute allowRoles={["ROLE_ADMIN"]} />}
         >
-          {/* <Route index element={<AdminDashboard />} /> */}
+          <Route index element={<Dashboard />} />
         </Route>
       </Route>
     </Routes>

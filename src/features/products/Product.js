@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { imagePath } from "../config/pathConfig";
+import { imagePath } from "../../config/pathConfig";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getLoginStatus, getRole, getToken, getUser } from "../auths/authSlice";
@@ -40,13 +40,26 @@ const Product = ({ product }) => {
           alt={product.name}
         />
         <div className="card-body">
+        <div className="d-flex gap-2">
+          <i className="bi bi-star-fill text-warning"/>
+          <i className="bi bi-star-fill text-warning"/>
+          <i className="bi bi-star-fill text-warning"/>
+          <i className="bi bi-star-fill text-warning"/>
+          <i className="bi bi-star-fill text-warning"/>
+          <div>({product.review})</div>
+          </div>
           <div className="card-title fs-6 fw-bold overflow-hidden" style={{maxHeight : 50 +'px', minHeight:50 +"px"}}>{product.name}</div>
+          
           {/* <div className="card-text overflow-hidden" style={{maxHeight : 100 +'px'}}>{product.description}</div> */}
           <div className="row row-cols md-2 mt-2">
             <div className="col">{product.price} $</div>
             {/* <p>{disVal}</p> */}
             {/* <p>{`${product.discountPercent}%`}</p> */}
-            <div className="col text-end">{product.discountPercent}% OFF</div>
+            <div className="col text-end">
+              {
+                product.discountPercent !== 0? `-${product.discountPercent}%` : ""
+              }
+            </div>
           </div>
           <div className="row g-2 py-2 text-end">
             <Link

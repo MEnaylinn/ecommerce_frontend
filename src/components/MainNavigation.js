@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getLoginStatus,
@@ -6,18 +6,17 @@ import {
   getUser,
   logout,
   getRole,
-} from "../../features/auths/authSlice";
-import { useEffect, useState } from "react";
+} from "../features/auths/authSlice";
+import { useEffect } from "react";
 import {
-  clearCartItem,
   fetchAllCartItem,
   getAllCartItems,
   getStatus,
-} from "../../features/cart/cartItemSlice";
+} from "../features/cart/cartItemSlice";
 import {
   fetchAllCategory,
   getAllCategories,
-} from "../../features/products/productSlice";
+} from "../features/products/productSlice";
 
 function MainNavigation() {
   const loginStatus = useSelector(getLoginStatus);
@@ -26,7 +25,6 @@ function MainNavigation() {
   const carts = useSelector(getAllCartItems);
   const token = useSelector(getToken);
   const status = useSelector(getStatus);
-  const navigate = useNavigate();
   const role = useSelector(getRole);
   const categories = useSelector(getAllCategories);
   
@@ -37,19 +35,12 @@ function MainNavigation() {
     }
   }, [dispatch, loginStatus, status, token]);
 
-  useEffect(() => {
-    if (!loginStatus) {
-      dispatch(logout());
-      dispatch(clearCartItem());
-      navigate("/user/login");
-    }
-  }, [loginStatus, navigate, dispatch]);
 
   useEffect(() => {
     if (token) {
       dispatch(fetchAllCategory());
     }
-  }, [ dispatch]);
+  }, [ dispatch,token]);
 
   let navProfile = "";
   let navLogin = "";
@@ -66,7 +57,7 @@ function MainNavigation() {
       </li>
     );
     navLogin = (
-      <Link to="/user/logout" onClick={dispatch(logout)} className="nav-link">
+      <Link to="/" onClick={dispatch(logout)} className="nav-link">
         Logout
       </Link>
     );

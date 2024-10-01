@@ -1,8 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { shippingPath } from "../config/pathConfig";
-import { actions } from "react-table";
-import { act } from "react";
+import { shippingPath } from "../../config/pathConfig";
 
 export const fetchAllShipping=createAsyncThunk("fetchAllShipping",async(data)=>{
     console.log("fetchAllShipping is :"+ data.token)

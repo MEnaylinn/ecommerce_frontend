@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { paymentPath } from "../config/pathConfig";
+import { paymentPath } from "../../config/pathConfig";
 import axios from "axios";
 
 export const fetchAllUserPayment = createAsyncThunk(

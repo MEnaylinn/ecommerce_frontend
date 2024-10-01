@@ -8,7 +8,7 @@ const CartBill = ({ items }) => {
 
   if(items){
   items.forEach((element) => {
-    totalBill += element.subTotal;
+    totalBill += (element.product.price * element.quantity);
     totalDiscount +=
       element.quantity *
       (element.product.price * (element.product.discountPercent / 100));

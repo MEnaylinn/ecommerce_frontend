@@ -72,7 +72,6 @@ const NewProductForm = () => {
       quantity,
       price,
       discountPercent,
-      image,
       review,
       description,
     ].every(Boolean) && requestStatus === "idle";

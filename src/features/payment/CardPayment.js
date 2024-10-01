@@ -1,22 +1,11 @@
-import React, { useState } from "react";
-import card from "../../image/card.jpg";
+import card from "../../assets/image/card.jpg";
 import CardShortcut from "./CardShortcut";
 import { Link } from "react-router-dom";
-import CardRegister from "./CardRegister";
-import { useSelector } from "react-redux";
-import { getAllUserPayment } from "./paymentSlice";
 
 const CardPayment = ({selected,onClick,billingAddress,userPayment,onCardSelection,selectedCard}) => {
 
-  // const [cond,setCond] =useState(0)
-  
-  // const onDisplay = ()=>{
-  //   setCond((prevCond)=>(prevCond === 0 ? 1: 0))
-  // }
   console.log('Payment with Credit Card')
-  // console.log(billingAddress.id)
 
-  let cardForm = ''
   let cards = ''
   if(selected){
     console.log(selectedCard)
